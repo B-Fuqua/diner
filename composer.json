@@ -1,0 +1,12 @@
+{
+  "name": "greatben/328/hello",
+  "authors": [
+    {
+      "name": "Ben Fuqua",
+      "email": "bfuqua@mail.greenriver.edu"
+    }
+  ],
+  "require": {
+    "bcosca/fatfree-core": "dev-master"
+  }
+}
