@@ -11,6 +11,7 @@ session_start();
 
 //Require autoload file
 require_once ('vendor/autoload.php');
+require_once ('model/data-layer.php');
 
 //Instantiate Fat-Free
 $f3 = Base::instance();
@@ -34,7 +35,7 @@ $f3->route('GET /lunch', function(){
     echo $view->render('views/lunch.html');
 });
 
-$f3->route('GET|POST /order1', function(){
+$f3->route('GET|POST /order1', function($f3){
 
     //If the form has been submitted, add the data to the session
     //and send the user to the next order form
@@ -45,12 +46,15 @@ $f3->route('GET|POST /order1', function(){
         header('location: order2');
     }
 
+    //Get the data from the model
+    $f3->set('meals', getMeals());
+
     //Display the lunch page
     $view = new Template();
     echo $view->render('views/orderForm1.html');
 });
 
-$f3->route('GET|POST /order2', function(){
+$f3->route('GET|POST /order2', function($f3){
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         //var_dump($_POST);
@@ -59,6 +63,9 @@ $f3->route('GET|POST /order2', function(){
         $_SESSION['conds'] = implode(", ", $_POST['conds']);
         header('location: summary');
     }
+
+    //Get the data from the model
+    $f3->set('conds', getConds());
 
     //Display the lunch page
     $view = new Template();
