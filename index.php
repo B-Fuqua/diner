@@ -12,6 +12,7 @@ session_start();
 //Require autoload file
 require_once ('vendor/autoload.php');
 require_once ('model/data-layer.php');
+require_once ('model/validation.php');
 
 //Instantiate Fat-Free
 $f3 = Base::instance();
@@ -41,9 +42,29 @@ $f3->route('GET|POST /order1', function($f3){
     //and send the user to the next order form
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
         //var_dump($_POST);
-        $_SESSION['food'] = $_POST['food'];
-        $_SESSION['meal'] = $_POST['meal'];
-        header('location: order2');
+
+        //If the food is valid, store the data
+
+        if(validFood($_POST['food'])) {
+            $_SESSION['food'] = $_POST['food'];
+        }
+        //Otherwise, set an error variable in the hive
+        else{
+            $f3->set('errors["food"]', "Please enter a valid food");
+        }
+
+        //If meal is valid, store data
+        if(isset($_POST['meal']) && validMeal($_POST['meal'])) {
+            $_SESSION['meal'] = $_POST['meal'];
+        }
+        else{
+            $f3->set('errors["meal"]', "Invalid meal selected");
+        }
+
+        //If there are no errors then redirect
+        if (empty($f3->get('errors'))){
+            header('location: order2');
+        }
     }
 
     //Get the data from the model

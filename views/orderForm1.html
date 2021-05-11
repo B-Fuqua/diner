@@ -13,6 +13,11 @@
             <div class="col-sm-4">
                 <input class="form-control" type="text" name="food" id="food" >
             </div>
+
+            <!-- Display an error message if there is one -->
+            <check if="{{ isset(@errors['food']) }}">
+                <span class="err">{{ @errors['food'] }}</span>
+            </check>
         </div>
         <br>
 
@@ -25,6 +30,11 @@
                                   id="breakfast" value="breakfast"> {{ @meal }}</input>
                     </label><br>
                 </repeat>
+
+                <!-- Display an error message if there is one -->
+                <check if="{{ isset(@errors['meal']) }}">
+                    <span class="err">{{ @errors['meal'] }}</span>
+                </check>
             </div>
         </div>
 
