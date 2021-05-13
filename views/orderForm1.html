@@ -11,7 +11,7 @@
             <label for="food" class="col-sm-2 control-label">What food would you like to order?</label>
 
             <div class="col-sm-4">
-                <input class="form-control" type="text" name="food" id="food" >
+                <input class="form-control" type="text" name="food" id="food" value="{{ @userFood }}">
             </div>
 
             <!-- Display an error message if there is one -->
@@ -27,7 +27,7 @@
             <div class="col-sm-4">
                 <repeat group="{{ @meals }}" value="{{ @meal }}">
                     <label><input type="radio" name="meal"
-                                  id="breakfast" value="breakfast"> {{ @meal }}</input>
+                                  id="breakfast" value="{{ @meal }}"> {{ @meal }}</input>
                     </label><br>
                 </repeat>
 

@@ -37,14 +37,21 @@ $f3->route('GET|POST /order1', function($f3){
     //Reinitialize session array
     $_SESSION = array();
 
+    //Initialize variables to store user input
+    $userFood = "";
+    $userMeal = "";
+
     //If the form has been submitted, add the data to session
     //and send the user to the next order form
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //var_dump($_POST);
 
+        $userFood = $_POST['food'];
+        $userMeal = $_POST['meal'];
+
         //If food is valid, store data
         if(validFood($_POST['food'])) {
-            $_SESSION['food'] = $_POST['food'];
+            $_SESSION['food'] = $userFood;
         }
         //Otherwise, set an error variable in the hive
         else {
@@ -52,7 +59,7 @@ $f3->route('GET|POST /order1', function($f3){
         }
 
         //If meal is valid, store data
-        if(isset($_POST['meal']) && validMeal($_POST['meal'])) {
+        if(!empty($userMeal) && validMeal($userMeal)) {
             $_SESSION['meal'] = $_POST['meal'];
         }
         //Otherwise, set an error variable in the hive
@@ -68,6 +75,9 @@ $f3->route('GET|POST /order1', function($f3){
 
     //Get the data from the model
     $f3->set('meals', getMeals());
+
+    //Store the user input in the hive
+    $f3->set('userFood', $userFood);
 
     //Display the first order form
     $view = new Template();

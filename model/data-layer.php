@@ -8,10 +8,10 @@
 // Get the meals for the order form
 function getMeals()
 {
-    return array("Breakfast", "Lunch", "Dinner");
+    return array("breakfast", "lunch", "dinner");
 }
 
 function getConds()
 {
-    return array("Ketchup", "Mustard", "Sriracha");
+    return array("ketchup", "mustard", "sriracha");
 }
