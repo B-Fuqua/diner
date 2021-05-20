@@ -10,8 +10,13 @@
             <label class="col-sm-2 control-label">Select condiments</label>
             <div class="col-sm-4">
                 <repeat group="{{ @conds }}" value="{{ @cond }}">
-                    <label><input type="checkbox" name="conds[]"
-                                  value="ketchup"> {{ @cond }}
+                    <label><input type="checkbox"
+                                  name="conds[]"
+                                  value="{{ @cond }}"
+                                    <check if="{{ in_array(@cond, @userConds) }}">
+                                        checked="checked"
+                                    </check>
+                    > {{ ucFirst(@cond) }}
                     </label><br>
                 </repeat>
                 <!-- Display an error message if there is one -->

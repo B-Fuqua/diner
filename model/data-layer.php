@@ -13,5 +13,5 @@ function getMeals()
 
 function getConds()
 {
-    return array("ketchup", "mustard", "sriracha");
+    return array("ketchup", "mustard", "sriracha", "mayo");
 }

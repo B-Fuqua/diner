@@ -37,6 +37,9 @@ $f3->route('GET|POST /order1', function($f3){
     //Reinitialize session array
     $_SESSION = array();
 
+    //Instantiate an Order object
+    $order = new Order();
+
     //Initialize variables to store user input
     $userFood = "";
     $userMeal = "";
@@ -60,7 +63,7 @@ $f3->route('GET|POST /order1', function($f3){
 
         //If meal is valid, store data
         if(!empty($userMeal) && validMeal($userMeal)) {
-            $_SESSION['meal'] = $_POST['meal'];
+            $_SESSION['meal'] = $userMeal;
         }
         //Otherwise, set an error variable in the hive
         else {
@@ -78,6 +81,7 @@ $f3->route('GET|POST /order1', function($f3){
 
     //Store the user input in the hive
     $f3->set('userFood', $userFood);
+    $f3->set('userMeal', $userMeal);
 
     //Display the first order form
     $view = new Template();
@@ -86,16 +90,22 @@ $f3->route('GET|POST /order1', function($f3){
 
 $f3->route('GET|POST /order2', function($f3){
 
+    //Initialize variables for user input
+    $userConds = array();
+
     //If the form has been submitted, validate the data
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         //var_dump($_POST);
 
         //If condiments are selected
-        if (!empty($_POST['conds'])) {
+        if (!empty($userConds)) {
+
+            //Get user input
+            $userConds = $_POST['conds'];
 
             //If condiments are valid
-            if (validConds($_POST['conds'])) {
-                $_SESSION['conds'] = implode(", ", $_POST['conds']);
+            if (validConds($userConds)) {
+                $_SESSION['conds'] = implode(", ", $userConds);
             }
             else {
                 $f3->set('errors["conds"]', 'Invalid selection');
@@ -109,7 +119,10 @@ $f3->route('GET|POST /order2', function($f3){
     }
 
     //Get the condiments from the Model and send them to the View
-    $f3->set('condiments', getConds());
+    $f3->set('conds', getConds());
+
+    //Add the user data to the hive
+    $f3->set('userConds', $userConds);
 
     //Display the second order form
     $view = new Template();
