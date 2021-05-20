@@ -18,9 +18,9 @@ function validMeal($meal)
 }
 
 //Return true if *all* condiments are valid
-function validConds($condiments)
+function validCondiments($condiments)
 {
-    $validConds = getConds();
+    $validConds = getCondiments();
 
     //Make sure each selected condiment is valid
     foreach ($condiments as $userChoice) {

@@ -1,4 +1,4 @@
-<include href="views/header.html"/>
+<include href="views/header.html"></include>
 <body>
 <div class="container">
     <h1>The Diner:  Order Form Part 2</h1>
@@ -9,21 +9,19 @@
         <div class="form-group">
             <label class="col-sm-2 control-label">Select condiments</label>
             <div class="col-sm-4">
-                <repeat group="{{ @conds }}" value="{{ @cond }}">
+                <repeat group="{{ @condiments }}" value="{{ @condiment }}">
                     <label><input type="checkbox"
                                   name="conds[]"
-                                  value="{{ @cond }}"
-                                    <check if="{{ in_array(@cond, @userConds) }}">
-                                        checked="checked"
-                                    </check>
-                    > {{ ucFirst(@cond) }}
-                    </label><br>
+                                  value="{{ @condiment }}"
+                        <check if="{{ in_array(@condiment, @userConds) }}">
+                            checked="checked"
+                        </check>
+                        > {{ @condiment }}</label><br>
                 </repeat>
-                <!-- Display an error message if there is one -->
-                <check if="{{ isset(@errors['conds']) }}">
-                    <span class="err">{{ @errors['conds'] }}</span>
-                </check>
             </div>
+            <check if="{{ isset(@errors['conds']) }}">
+                <span class="err">{{ @errors['conds'] }}</span>
+            </check>
         </div>
 
         <div class="col-xs-3 ">

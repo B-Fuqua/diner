@@ -1,17 +1,17 @@
 <?php
 
-/*
- * data-layer.php
+/* data-layer.php
  * Return data for the diner app
  */
 
 // Get the meals for the order form
 function getMeals()
 {
-    return array("breakfast", "lunch", "dinner");
+    return array("breakfast", "brunch", "lunch", "dinner");
 }
 
-function getConds()
+// Get the condiments for the order 2 form
+function getCondiments()
 {
-    return array("ketchup", "mustard", "sriracha", "mayo");
+    return array("ketchup", "mustard", "mayo", "sriracha");
 }
