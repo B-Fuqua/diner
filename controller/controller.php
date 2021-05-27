@@ -121,6 +121,10 @@ class Controller
 
     function summary()
     {
+        //Save the order to the database
+        $orderId = $GLOBALS['dataLayer']->saveOrder();
+        $this->_f3->set('orderId', $orderId);
+
         //Display the summary page
         $view = new Template();
         echo $view->render('views/summary.html');
