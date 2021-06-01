@@ -6,7 +6,10 @@ class Order
     private $_meal;
     private $_condiments;
 
-    public function __construct($food = "", $meal = "", $condiments = "")
+    /**
+     * Order constructor.
+     */
+    public function __construct($food="", $meal="", $condiments="")
     {
         $this->_food = $food;
         $this->_meal = $meal;
@@ -24,7 +27,7 @@ class Order
     /**
      * @param string $food
      */
-    public function setFood(string $food)
+    public function setFood(string $food): void
     {
         $this->_food = $food;
     }
@@ -40,7 +43,7 @@ class Order
     /**
      * @param string $meal
      */
-    public function setMeal(string $meal)
+    public function setMeal(string $meal): void
     {
         $this->_meal = $meal;
     }
@@ -56,10 +59,8 @@ class Order
     /**
      * @param string $condiments
      */
-    public function setCondiments(string $condiments)
+    public function setCondiments(string $condiments): void
     {
         $this->_condiments = $condiments;
     }
-
-
 }

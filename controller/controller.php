@@ -2,7 +2,7 @@
 
 class Controller
 {
-    private $_f3; //Router
+    private $_f3; //router
 
     function __construct($f3)
     {
@@ -122,11 +122,24 @@ class Controller
     function summary()
     {
         //Save the order to the database
-        $orderId = $GLOBALS['dataLayer']->saveOrder();
+        //global $dataLayer;
+        //$dataLayer->saveOrder();
+        //--or--
+        $orderId = $GLOBALS['dataLayer']->saveOrder($_SESSION['order']);
         $this->_f3->set('orderId', $orderId);
 
-        //Display the summary page
+        //Display the second order form
         $view = new Template();
         echo $view->render('views/summary.html');
+
+        //This might be problematic
+        unset($_SESSION['order']);
+    }
+
+    function admin()
+    {
+        $this->_f3->set('orders', $GLOBALS['dataLayer']->getOrders());
+        $view = new Template();
+        echo $view->render('views/admin.html');
     }
 }
