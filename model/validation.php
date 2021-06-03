@@ -1,21 +1,30 @@
 <?php
 
+/* validation.php
+ * Validate data for the diner app
+ *
+ */
+
 class Validation
 {
     //Return true if a food is valid
-    static function validFood($food): bool
+    static function validFood($food)
     {
         return strlen(trim($food)) >= 2;
     }
 
     //Return true if meal is valid
-    static function validMeal($meal): bool
+    static function validMeal($mealId)
     {
-        return in_array($meal, DataLayer::getMeals());
+        //echo "Meal ID: $mealId";
+        $meals = $GLOBALS['dataLayer']->getMeals();
+        //var_dump($meals);
+        //die();
+        return array_key_exists($mealId, $meals);
     }
 
     //Return true if *all* condiments are valid
-    static function validCondiments($condiments): bool
+    static function validCondiments($condiments)
     {
         $validCondiments = DataLayer::getCondiments();
 

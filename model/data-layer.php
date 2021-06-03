@@ -34,8 +34,6 @@ class DataLayer
         }
     }
 
-    // Saves an order to the database
-
     /**
      * saveOrder accepts an Order object and inserts it into the database
      * @param $order
@@ -44,7 +42,7 @@ class DataLayer
     function saveOrder($order)
     {
         //1. Define the query
-        $sql = "INSERT INTO orders (food, meal, condiments) 
+        $sql = "INSERT INTO orders (food, meal_id, condiments) 
                 VALUES (:food, :meal, :condiments)";
 
         //2. Prepare the statement
@@ -63,18 +61,57 @@ class DataLayer
         return $id;
     }
 
-    // Get the meals for the order form
+    /**
+     * getOrders returns all orders from the database
+     * @return array An array of data rows
+     */
+    function getOrders()
+    {
+        //1. Define the query
+        $sql = "SELECT order_id, food, meal_name, condiments, order_date FROM orders, meal
+                WHERE orders.meal_id = meal.meal_id";
+
+        //2. Prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //3. Bind the parameters
+
+        //4. Execute the query
+        $statement->execute();
+
+        //5. Process the results
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
     /**
      * getMeals returns an array of meal options
      * @return string[]
      */
-    static function getMeals()
+    function getMeals()
     {
-        return array("breakfast", "brunch", "lunch", "dinner");
-    }
+        //1. Define the query
+        $sql = "SELECT meal_id, meal_name FROM meal";
 
-    // Get the condiments for the order 2 form
+        //2. Prepare the statement
+        $statement = $this->_dbh->prepare($sql);
+
+        //3. Bind the parameters
+
+        //4. Execute the query
+        $statement->execute();
+
+        //5. Process the results
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $meals = array();
+        foreach ($result as $row) {
+            $meal_id = $row['meal_id'];
+            $meal_name = $row['meal_name'];
+            $meals[$meal_id] = $meal_name;
+        }
+
+        return $meals;
+    }
 
     /**
      * getCondiments returns an array of condiment options
@@ -83,20 +120,5 @@ class DataLayer
     static function getCondiments()
     {
         return array("ketchup", "mustard", "mayo", "sriracha", "maple syrup");
-    }
-
-    function getOrders()
-    {
-        //Define the query
-        $sql = "SELECT order_id, food, meal, condiments, order_date FROM orders";
-
-        //Prepare the statement
-        $statement = $this->_dbh->prepare($sql);
-
-        //Execute the statment
-        $statement->execute();
-
-        //Process the results
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }

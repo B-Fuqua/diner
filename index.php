@@ -14,7 +14,17 @@ session_start();
 $f3 = Base::instance();
 $con = new Controller($f3);
 $dataLayer = new DataLayer();
+
+//Test code
+//$result = $dataLayer->getMeals();
+//var_dump($result);
 //$dataLayer->saveOrder(new Order('taco', 'lunch', 'salsa'));
+/*
+echo "<pre>";
+$result = $dataLayer->getOrders();
+var_dump($result);
+echo "</pre>";
+*/
 
 //Define default route
 $f3->route('GET /', function(){
@@ -23,6 +33,7 @@ $f3->route('GET /', function(){
 });
 
 $f3->route('GET /breakfast', function(){
+
     //Display the breakfast page
     $view = new Template();
     echo $view->render('views/breakfast.html');
@@ -53,3 +64,4 @@ $f3->route('GET /admin', function(){
 
 //Run Fat-Free
 $f3->run();
+
